@@ -29,3 +29,9 @@ def upload_book(request):
 	else:
 		form = BookForm()
 	return render(request, 'dashboard/upload_book.html', {'form': form})
+
+def delete_book(request, pk):
+	if request.method == 'POST':
+		book = Book.objects.get(pk=pk)
+		book.delete()
+	return redirect('book_list')
