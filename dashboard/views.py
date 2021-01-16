@@ -13,3 +13,9 @@ def upload(request):
 		name = fs.save(uploaded_file.name, uploaded_file)
 		context['url'] = fs.url(name)
 	return render(request, 'dashboard/upload.html', context)
+
+def book_list(request):
+	return render(request, 'dashboard/book_list.html')
+
+def upload_book(request):
+	return render(request, 'dashboard/upload_book.html')
