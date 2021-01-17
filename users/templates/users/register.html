@@ -1,0 +1,59 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="content-section">
+		<form method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">{{ title }}</legend>
+			</fieldset>
+			<div class="form-row">
+				<div class="form=group col-md-6 mb-0">
+					{{ u_form.username|as_crispy_field }}
+				</div>
+				<div class="form=group col-md-6 mb-0">
+					{{ u_form.email|as_crispy_field }}
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form=group col-md-6 mb-0">
+					{{ u_form.password1|as_crispy_field }}
+				</div>
+				<div class="form=group col-md-6 mb-0">
+					{{ u_form.password2|as_crispy_field }}
+				</div>
+			</div>
+			{% if role == 'student' %}
+			<div class="form-row">
+				<div class="form=group col-md-4 mb-0">
+					{{ u_form.last_name|as_crispy_field }}
+				</div>
+				<div class="form=group col-md-4 mb-0">
+					{{ u_form.first_name|as_crispy_field }}
+				</div>
+				<div class="form=group col-md-4 mb-0">
+					{{ p1_form.k_f|as_crispy_field }}
+				</div>
+			</div>
+			{% else %}
+			<div class="form-row">
+				<div class="form=group col-md-6 mb-0">
+					{{ u_form.last_name|as_crispy_field }}
+				</div>
+				<div class="form=group col-md-6 mb-0">
+					{{ u_form.first_name|as_crispy_field }}
+				</div>
+			</div>
+			{% endif %}
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Εγγραφή</button>
+			</div>
+		</form>
+		<div class="border-top pt-3">
+			<small class="text-muted">
+				Έχετε ήδη λογαριασμό;<a class="ml-2" href="{% url 'login' %}">Σύνδεση</a>
+			</small>
+		</div>
+	</div>
+{% endblock %}
