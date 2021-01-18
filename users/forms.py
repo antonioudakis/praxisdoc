@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from users.models import UserProfile, StudentProfile
+from users.models import UserProfile, StudentProfile, StudentFile1
 
 class UserRegisterForm(UserCreationForm):
 	email = forms.EmailField()
@@ -28,13 +28,19 @@ class UserProfileForm(forms.ModelForm):
 
 	class Meta:
 		model = UserProfile
-		fields = ['is_administrator','is_operator','is_student']
+		fields = []
 
 class StudentProfileForm(forms.ModelForm):
 	k_f = forms.CharField(label='Α.Μ.')
-	pdf = forms.FileField(label='pdf',required=False)
-	pdf_date_uploaded = forms.DateField(label='Ημ/νία',required=False)
 
 	class Meta:
 		model = StudentProfile
-		fields = ['k_f','pdf','pdf_date_uploaded']
+		fields = ['k_f']
+
+class StudentFile1Form(forms.ModelForm):
+	file1 = forms.FileField(label='file1',required=False)
+	file1_date_uploaded = forms.DateField(label='Ημ/νία',required=False)
+
+	class Meta:
+		model = StudentFile1
+		fields = ['file1','file1_date_uploaded']

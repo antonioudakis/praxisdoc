@@ -27,25 +27,30 @@
 				<tr>
 					<td>1</td>
 					<td>Ταυτότητα</td>
-					{% if user.studentprofile.pdf %}
-					<td>nice file</td>
+					{% if user.studentfile1.file1 %}
+					<td>{{user.studentfile1.file1_date_uploaded }}</td>
+					<td><a href="{{ user.studentfile1.file1.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Λήψη</a></td>
+					<td>
+						<form method="post" action="{% url 'users:delete_file1' user.studentfile1.pk %}">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-outline-danger btn-sm">Διαγραφή</button>
+						</form>
+					</td>
 					{% else %}
 					<td>
-						<form method="post" enctype="multipart/form-data">
+						<form method="post" action="{% url 'users:upload_file1' %}" enctype="multipart/form-data">
 							{% csrf_token %}
 							<input type="file" name="document">
 							<button type="submit" class="btn btn-outline-primary btn-sm">Ανέβασμα Αρχείου</button>
 						</form>
 					</td>
-					{% endif %}
 					<td>
-						<a href="{{ book.pdf.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Λήψη
+						
 					</td>
+					{% endif %}
+					
 					<td>
-						<form method="post" action="{% url 'dashboard:index' %}">
-							{% csrf_token %}
-							<button type="submit" class="btn btn-outline-danger btn-sm">Διαγραφή</button>
-						</form>
+						
 					</td>
 				</tr>
 			</tbody>
