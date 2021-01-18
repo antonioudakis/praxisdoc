@@ -16,6 +16,36 @@
   {% endif %}
 </head>
 <body>
+  <header class="site-header">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-steel">
+      <a class="navbar-brand mr-4" href="{% url 'dashboard:index' %}">
+        <img class="mr-2" src="{% static 'dashboard/img/pyrforos.png' %}" width="30" height="30" alt="pyrforos" loading="lazy">Praxis Doc
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggler">
+        <!--<ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="#">link 1</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">link 2</a></li>
+        </ul>-->
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">{{ user.last_name }} {{ user.first_name }}</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'users:profile' %}">Προφίλ</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Αποσύνδεση</a>
+              </div>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'users:register_student' %}">Εγγραφή</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Σύνδεση</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
   <main role="main" class="container">
     {% if messages %}
       {% for message in messages %}

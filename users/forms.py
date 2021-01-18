@@ -32,8 +32,8 @@ class UserProfileForm(forms.ModelForm):
 
 class StudentProfileForm(forms.ModelForm):
 	k_f = forms.CharField(label='Α.Μ.')
-	pdf = forms.FileField(label='pdf')
-	pdf_date_uploaded = forms.DateField(label='Ημ/νία')
+	pdf = forms.FileField(label='pdf',required=False)
+	pdf_date_uploaded = forms.DateField(label='Ημ/νία',required=False)
 
 	class Meta:
 		model = StudentProfile

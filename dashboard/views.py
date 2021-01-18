@@ -7,6 +7,9 @@ from .models import Book
 class Home(TemplateView):
 	template_name = 'home.html'
 
+def index(request):
+	return render(request, 'dashboard/index.html')
+
 def upload(request):
 	context = {}
 	if request.method == 'POST':
