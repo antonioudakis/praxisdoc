@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 #from .models import UserProfile
 from django.contrib.auth.models import User
 from .models import StudentFileID,StudentFileEFKA,StudentFileIBAN, StudentFileDOY
-from .forms import UserRegisterForm, UserUpdateForm, UserProfileForm, StudentFileIDForm
+from .forms import UserRegisterForm, UserUpdateForm, UserProfileForm, StudentProfileForm, StudentFileIDForm
 
 def registration(request):
 	return render(request,'users/registration.html', {'title':'Εγγραφή'})

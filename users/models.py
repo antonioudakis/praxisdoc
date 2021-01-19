@@ -2,11 +2,18 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+class School(models.Model):
+	title = models.CharField(max_length=60)
+
+	def __str__(self):
+		return self.title
+
 class UserProfile(models.Model):
 	user = models.OneToOneField(User,on_delete=models.CASCADE)
 	is_administrator = models.BooleanField(default=False)
 	is_operator = models.BooleanField(default=False)
 	is_student = models.BooleanField(default=False)
+	school = models.ManyToManyField(School)
 
 	def __str__(self):
 		return self.user.last_name + ' ' + self.user.first_name[:1]
