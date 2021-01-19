@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 #from .models import UserProfile
 from django.contrib.auth.models import User
-from .models import StudentFile1
-from .forms import UserRegisterForm, UserUpdateForm, UserProfileForm
+from .models import StudentFileID,StudentFileEFKA,StudentFileIBAN, StudentFileDOY
+from .forms import UserRegisterForm, UserUpdateForm, UserProfileForm, StudentFileIDForm
 
 def registration(request):
 	return render(request,'users/registration.html', {'title':'Εγγραφή'})
@@ -100,23 +100,111 @@ def upload_pdf(request):
 	return render(request, 'dashboard/upload_book.html', {'form': form})
 
 @login_required
-def upload_file1(request):
+def upload_fileID(request):
 	if request.method == 'POST':
 		try:
-			uploaded_file = request.FILES['document']
+			uploaded_file = request.FILES['documentID']
+			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
 			fs = FileSystemStorage()
 			name = fs.save(uploaded_file.name, uploaded_file)
 			#studentFile1 = StudentFile1.objects.get(user=request.user)
-			studentFile1 = StudentFile1(user=request.user, file1=name)
-			studentFile1.save()
+			#print(name)
+			#print(fs.url(name))
+			studentFileID = StudentFileID(user=request.user, fileID=name)
+			studentFileID.save()
+			#print(studentFile1.file1)
+			#print(studentFile1.file1.url)
 		except Exception as e:
 			#print(type(e))
 			messages.warning(request, f'Δεν επιλέξατε αρχείο')
 	return redirect('dashboard:index')
 
 @login_required
-def delete_file1(request, pk):
+def delete_fileID(request, pk):
 	if request.method == 'POST':
-		file1 = StudentFile1.objects.get(pk=pk)
-		file1.delete()
+		fileID = StudentFileID.objects.get(pk=pk)
+		fileID.delete()
 	return redirect('dashboard:index')
+
+@login_required
+def upload_fileEFKA(request):
+	if request.method == 'POST':
+		try:
+			uploaded_file = request.FILES['documentEFKA']
+			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
+			fs = FileSystemStorage()
+			name = fs.save(uploaded_file.name, uploaded_file)
+			#studentFile1 = StudentFile1.objects.get(user=request.user)
+			#print(name)
+			#print(fs.url(name))
+			studentFileEFKA = StudentFileEFKA(user=request.user, fileEFKA=name)
+			studentFileEFKA.save()
+			#print(studentFile1.file1)
+			#print(studentFile1.file1.url)
+		except Exception as e:
+			#print(type(e))
+			messages.warning(request, f'Δεν επιλέξατε αρχείο')
+	return redirect('dashboard:index')
+
+@login_required
+def delete_fileEFKA(request, pk):
+	if request.method == 'POST':
+		fileEFKA = StudentFileEFKA.objects.get(pk=pk)
+		fileEFKA.delete()
+	return redirect('dashboard:index')
+
+@login_required
+def upload_fileIBAN(request):
+	if request.method == 'POST':
+		try:
+			uploaded_file = request.FILES['documentIBAN']
+			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
+			fs = FileSystemStorage()
+			name = fs.save(uploaded_file.name, uploaded_file)
+			#studentFile1 = StudentFile1.objects.get(user=request.user)
+			#print(name)
+			#print(fs.url(name))
+			studentFileIBAN = StudentFileIBAN(user=request.user, fileIBAN=name)
+			studentFileIBAN.save()
+			#print(studentFile1.file1)
+			#print(studentFile1.file1.url)
+		except Exception as e:
+			#print(type(e))
+			messages.warning(request, f'Δεν επιλέξατε αρχείο')
+	return redirect('dashboard:index')
+
+@login_required
+def delete_fileIBAN(request, pk):
+	if request.method == 'POST':
+		fileIBAN = StudentFileIBAN.objects.get(pk=pk)
+		fileIBAN.delete()
+	return redirect('dashboard:index')
+
+@login_required
+def upload_fileDOY(request):
+	if request.method == 'POST':
+		try:
+			uploaded_file = request.FILES['documentDOY']
+			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
+			fs = FileSystemStorage()
+			name = fs.save(uploaded_file.name, uploaded_file)
+			#studentFile1 = StudentFile1.objects.get(user=request.user)
+			#print(name)
+			#print(fs.url(name))
+			studentFileDOY = StudentFileDOY(user=request.user, fileDOY=name)
+			studentFileDOY.save()
+			#print(studentFile1.file1)
+			#print(studentFile1.file1.url)
+		except Exception as e:
+			#print(type(e))
+			messages.warning(request, f'Δεν επιλέξατε αρχείο')
+	return redirect('dashboard:index')
+
+@login_required
+def delete_fileDOY(request, pk):
+	if request.method == 'POST':
+		fileDOY = StudentFileDOY.objects.get(pk=pk)
+		fileDOY.delete()
+	return redirect('dashboard:index')
+
+
