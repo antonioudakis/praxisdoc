@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from users.models import UserProfile, StudentProfile, StudentFileID
+from users.models import UserProfile, StudentProfile, StudentFileID, School
 
 class UserRegisterForm(UserCreationForm):
 	email = forms.EmailField()
@@ -25,10 +25,12 @@ class UserProfileForm(forms.ModelForm):
 	is_administrator = forms.BooleanField(label='Διαχειριστής',required=False)
 	is_operator = forms.BooleanField(label='Χειριστής',required=False)
 	is_student = forms.BooleanField(label='Φοιτητής',required=False)
+	#school = forms.ModelMultipleChoiceField(label='Σχολή',queryset=School.objects.all())
+	school = forms.ModelMultipleChoiceField(label='Σχολή',queryset=School.objects.all(),widget=forms.CheckboxSelectMultiple)
 
 	class Meta:
 		model = UserProfile
-		fields = []
+		fields = ['school']
 
 class StudentProfileForm(forms.ModelForm):
 	k_f = forms.CharField(label='Α.Μ.')
