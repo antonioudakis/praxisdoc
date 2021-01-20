@@ -18,9 +18,13 @@
 				<tr>
 					<th>Α/Α</th>
 					<th>Έγγραφο</th>
-					<th>Αποστολή</th>
-					<th>Λήψη</th>
-					<th>Διαγραφή</th>
+					<th>Ημ/νία Αποστολής</th>
+					<th>
+						<div class="d-flex justify-content-center">Λήψη/Αποστολή</div>
+					</th>
+					<th>
+						<div class="d-flex justify-content-center">Διαγραφή</div>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,22 +33,32 @@
 					<td>Ταυτότητα</td>
 					{% if user.studentfileid.fileID %}
 						<td>{{user.studentfileid.fileID_date_uploaded }}</td>
-						<td><a href="{{ user.studentfileid.fileID.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Λήψη</a></td>
 						<td>
-							<form method="post" action="{% url 'users:delete_fileID' user.studentfileid.pk %}">
-								{% csrf_token %}
-								<button type="submit" class="btn btn-outline-danger btn-sm">Διαγραφή</button>
-							</form>
+							<div class="d-flex justify-content-center">
+								
+									<a href="{{ user.studentfileid.fileID.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex justify-content-center">
+								<form method="post" action="{% url 'users:delete_fileID' user.studentfileid.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash p-1" style="font-size:20px;"></i></button>
+								</form>
+							</div>
 						</td>
 					{% else %}
-						<td>
-							<form method="post" action="{% url 'users:upload_fileID' %}" enctype="multipart/form-data">
-								{% csrf_token %}
+						<form method="post" action="{% url 'users:upload_fileID' %}" enctype="multipart/form-data">
+							{% csrf_token %}
+							<td>
 								<input type="file" name="documentID">
-								<button type="submit" class="btn btn-outline-primary btn-sm">Ανέβασμα Αρχείου</button>
-							</form>
-						</td>
-						<td></td>
+							</td>
+							<td>
+								<div class="d-flex justify-content-center">
+									<button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-upload p-1" style="font-size:20px;"></i></button>
+								</div>
+							</td>
+						</form>
 						<td></td>
 					{% endif %}
 				</tr>
@@ -53,22 +67,31 @@
 					<td>Βεβαίωση Απογραφής ΕΦΚΑ</td>
 					{% if user.studentfileefka.fileEFKA %}
 						<td>{{user.studentfileefka.fileEFKA_date_uploaded }}</td>
-						<td><a href="{{ user.studentfileefka.fileEFKA.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Λήψη</a></td>
 						<td>
-							<form method="post" action="{% url 'users:delete_fileEFKA' user.studentfileefka.pk %}">
-								{% csrf_token %}
-								<button type="submit" class="btn btn-outline-danger btn-sm">Διαγραφή</button>
-							</form>
+							<div class="d-flex justify-content-center">
+								<a href="{{ user.studentfileefka.fileEFKA.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex justify-content-center">
+								<form method="post" action="{% url 'users:delete_fileEFKA' user.studentfileefka.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash p-1" style="font-size:20px;"></i></button>
+								</form>
+							</div>
 						</td>
 					{% else %}
-						<td>
-							<form method="post" action="{% url 'users:upload_fileEFKA' %}" enctype="multipart/form-data">
-								{% csrf_token %}
+						<form method="post" action="{% url 'users:upload_fileEFKA' %}" enctype="multipart/form-data">
+							{% csrf_token %}
+							<td>
 								<input type="file" name="documentEFKA">
-								<button type="submit" class="btn btn-outline-primary btn-sm">Ανέβασμα Αρχείου</button>
-							</form>
-						</td>
-						<td></td>
+							</td>
+							<td>
+								<div class="d-flex justify-content-center">
+									<button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-upload p-1" style="font-size:20px;"></i></button>
+								</div>
+							</td>
+						</form>
 						<td></td>
 					{% endif %}
 				</tr>
@@ -77,22 +100,31 @@
 					<td>Έντυπο ΙΒΑΝ</td>
 					{% if user.studentfileiban.fileIBAN %}
 						<td>{{user.studentfileiban.fileIBAN_date_uploaded }}</td>
-						<td><a href="{{ user.studentfileiban.fileIBAN.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Λήψη</a></td>
 						<td>
-							<form method="post" action="{% url 'users:delete_fileIBAN' user.studentfileiban.pk %}">
-								{% csrf_token %}
-								<button type="submit" class="btn btn-outline-danger btn-sm">Διαγραφή</button>
-							</form>
+							<div class="d-flex justify-content-center">
+								<a href="{{ user.studentfileiban.fileIBAN.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex justify-content-center">
+								<form method="post" action="{% url 'users:delete_fileIBAN' user.studentfileiban.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash p-1" style="font-size:20px;"></i></button>
+								</form>
+							</div>
 						</td>
 					{% else %}
-						<td>
-							<form method="post" action="{% url 'users:upload_fileIBAN' %}" enctype="multipart/form-data">
-								{% csrf_token %}
+						<form method="post" action="{% url 'users:upload_fileIBAN' %}" enctype="multipart/form-data">
+							{% csrf_token %}
+							<td>
 								<input type="file" name="documentIBAN">
-								<button type="submit" class="btn btn-outline-primary btn-sm">Ανέβασμα Αρχείου</button>
-							</form>
-						</td>
-						<td></td>
+							</td>
+							<td>
+								<div class="d-flex justify-content-center">
+									<button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-upload p-1" style="font-size:20px;"></i></button>
+								</div>
+							</td>
+						</form>
 						<td></td>
 					{% endif %}
 				</tr>
@@ -101,22 +133,31 @@
 					<td>Βεβαίωση ΔΟΥ</td>
 					{% if user.studentfiledoy.fileDOY %}
 						<td>{{user.studentfiledoy.fileDOY_date_uploaded }}</td>
-						<td><a href="{{ user.studentfiledoy.fileDOY.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Λήψη</a></td>
 						<td>
-							<form method="post" action="{% url 'users:delete_fileDOY' user.studentfiledoy.pk %}">
-								{% csrf_token %}
-								<button type="submit" class="btn btn-outline-danger btn-sm">Διαγραφή</button>
-							</form>
+							<div class="d-flex justify-content-center">
+								<a href="{{ user.studentfiledoy.fileDOY.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex justify-content-center">
+								<form method="post" action="{% url 'users:delete_fileDOY' user.studentfiledoy.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash p-1" style="font-size:20px;"></i></button>
+								</form>
+							</div>
 						</td>
 					{% else %}
-						<td>
-							<form method="post" action="{% url 'users:upload_fileDOY' %}" enctype="multipart/form-data">
-								{% csrf_token %}
+						<form method="post" action="{% url 'users:upload_fileDOY' %}" enctype="multipart/form-data">
+							{% csrf_token %}
+							<td>
 								<input type="file" name="documentDOY">
-								<button type="submit" class="btn btn-outline-primary btn-sm">Ανέβασμα Αρχείου</button>
-							</form>
-						</td>
-						<td></td>
+							</td>
+							<td>
+								<div class="d-flex justify-content-center">
+									<button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-upload p-1" style="font-size:20px;"></i></button>
+								</div>
+							</td>
+						</form>
 						<td></td>
 					{% endif %}
 				</tr>
