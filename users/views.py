@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+from datetime import datetime
 #from .models import UserProfile
 from django.contrib.auth.models import User
 from .models import StudentFileID,StudentFileEFKA,StudentFileIBAN, StudentFileDOY
@@ -100,13 +102,26 @@ def upload_pdf(request):
 	return render(request, 'dashboard/upload_book.html', {'form': form})
 
 @login_required
+def download_fileID(request, pk):
+	if request.method == 'POST':
+		studentfileid = StudentFileID.objects.get(pk=pk)
+		filename = studentfileid.fileID.name.split('/')[-1]
+		response = HttpResponse(studentfileid.fileID, content_type='Application/pdf')
+		#response = HttpResponse(studentfileid.fileID)
+		response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+	return response
+
+@login_required
 def upload_fileID(request):
 	if request.method == 'POST':
 		try:
 			uploaded_file = request.FILES['documentID']
 			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
 			fs = FileSystemStorage()
-			name = fs.save(uploaded_file.name, uploaded_file)
+			#filename = uploaded_file.name
+			filename = request.user.username+'_ID_'+datetime.now().strftime('%Y%m%d%H%M%S')+'.pdf'
+			name = fs.save(filename, uploaded_file)
 			#studentFile1 = StudentFile1.objects.get(user=request.user)
 			#print(name)
 			#print(fs.url(name))
@@ -127,13 +142,26 @@ def delete_fileID(request, pk):
 	return redirect('dashboard:index')
 
 @login_required
+def download_fileEFKA(request, pk):
+	if request.method == 'POST':
+		studentfileefka = StudentFileEFKA.objects.get(pk=pk)
+		filename = studentfileefka.fileEFKA.name.split('/')[-1]
+		response = HttpResponse(studentfileefka.fileEFKA, content_type='Application/pdf')
+		#response = HttpResponse(studentfileefka.fileEFKA)
+		response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+	return response
+
+@login_required
 def upload_fileEFKA(request):
 	if request.method == 'POST':
 		try:
 			uploaded_file = request.FILES['documentEFKA']
 			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
 			fs = FileSystemStorage()
-			name = fs.save(uploaded_file.name, uploaded_file)
+			#filename = uploaded_file.name
+			filename = request.user.username+'_EFKA_'+datetime.now().strftime('%Y%m%d%H%M%S')+'.pdf'
+			name = fs.save(filename, uploaded_file)
 			#studentFile1 = StudentFile1.objects.get(user=request.user)
 			#print(name)
 			#print(fs.url(name))
@@ -154,13 +182,26 @@ def delete_fileEFKA(request, pk):
 	return redirect('dashboard:index')
 
 @login_required
+def download_fileIBAN(request, pk):
+	if request.method == 'POST':
+		studentfileiban = StudentFileIBAN.objects.get(pk=pk)
+		filename = studentfileiban.fileIBAN.name.split('/')[-1]
+		response = HttpResponse(studentfileiban.fileIBAN, content_type='Application/pdf')
+		#response = HttpResponse(studentfileiban.fileIBAN)
+		response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+	return response
+
+@login_required
 def upload_fileIBAN(request):
 	if request.method == 'POST':
 		try:
 			uploaded_file = request.FILES['documentIBAN']
 			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
 			fs = FileSystemStorage()
-			name = fs.save(uploaded_file.name, uploaded_file)
+			#filename = uploaded_file.name
+			filename = request.user.username+'_IBAN_'+datetime.now().strftime('%Y%m%d%H%M%S')+'.pdf'
+			name = fs.save(filename, uploaded_file)
 			#studentFile1 = StudentFile1.objects.get(user=request.user)
 			#print(name)
 			#print(fs.url(name))
@@ -181,13 +222,26 @@ def delete_fileIBAN(request, pk):
 	return redirect('dashboard:index')
 
 @login_required
+def download_fileDOY(request, pk):
+	if request.method == 'POST':
+		studentfiledoy = StudentFileDOY.objects.get(pk=pk)
+		filename = studentfiledoy.fileDOY.name.split('/')[-1]
+		response = HttpResponse(studentfiledoy.fileDOY, content_type='Application/pdf')
+		#response = HttpResponse(studentfiledoy.fileDOY)
+		response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+	return response
+
+@login_required
 def upload_fileDOY(request):
 	if request.method == 'POST':
 		try:
 			uploaded_file = request.FILES['documentDOY']
 			#fs = FileSystemStorage(location='./media/students/file1/', base_url='/media/students/file1/')
 			fs = FileSystemStorage()
-			name = fs.save(uploaded_file.name, uploaded_file)
+			#filename = uploaded_file.name
+			filename = request.user.username+'_DOY_'+datetime.now().strftime('%Y%m%d%H%M%S')+'.pdf'
+			name = fs.save(filename, uploaded_file)
 			#studentFile1 = StudentFile1.objects.get(user=request.user)
 			#print(name)
 			#print(fs.url(name))
@@ -206,5 +260,3 @@ def delete_fileDOY(request, pk):
 		fileDOY = StudentFileDOY.objects.get(pk=pk)
 		fileDOY.delete()
 	return redirect('dashboard:index')
-
-

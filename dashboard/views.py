@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.core.files.storage import FileSystemStorage
 from .forms import BookForm
 from .models import Book
+from users.models import StudentFileID
 
 class Home(TemplateView):
 	template_name = 'home.html'
@@ -14,6 +16,8 @@ def upload(request):
 	context = {}
 	if request.method == 'POST':
 		uploaded_file = request.FILES['document']
+		print(uploaded_file)
+		print(type(uploaded_file))
 		fs = FileSystemStorage()
 		name = fs.save(uploaded_file.name, uploaded_file)
 		context['url'] = fs.url(name)
@@ -38,3 +42,5 @@ def delete_book(request, pk):
 		book = Book.objects.get(pk=pk)
 		book.delete()
 	return redirect('book_list')
+
+

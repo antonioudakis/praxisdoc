@@ -35,8 +35,10 @@
 						<td>{{user.studentfileid.fileID_date_uploaded }}</td>
 						<td>
 							<div class="d-flex justify-content-center">
-								
-									<a href="{{ user.studentfileid.fileID.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+								<form method="post" action="{% url 'users:download_fileID' user.studentfileid.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-download p-1" style="font-size:20px;"></i></button>
+								</form>
 							</div>
 						</td>
 						<td>
@@ -69,7 +71,10 @@
 						<td>{{user.studentfileefka.fileEFKA_date_uploaded }}</td>
 						<td>
 							<div class="d-flex justify-content-center">
-								<a href="{{ user.studentfileefka.fileEFKA.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+								<form method="post" action="{% url 'users:download_fileEFKA' user.studentfileefka.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-download p-1" style="font-size:20px;"></i></button>
+								</form>
 							</div>
 						</td>
 						<td>
@@ -102,7 +107,10 @@
 						<td>{{user.studentfileiban.fileIBAN_date_uploaded }}</td>
 						<td>
 							<div class="d-flex justify-content-center">
-								<a href="{{ user.studentfileiban.fileIBAN.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+								<form method="post" action="{% url 'users:download_fileIBAN' user.studentfileiban.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-download p-1" style="font-size:20px;"></i></button>
+								</form>
 							</div>
 						</td>
 						<td>
@@ -135,7 +143,10 @@
 						<td>{{user.studentfiledoy.fileDOY_date_uploaded }}</td>
 						<td>
 							<div class="d-flex justify-content-center">
-								<a href="{{ user.studentfiledoy.fileDOY.url }}" class="btn btn-outline-success btn-sm" target="_blank"><i class="fas fa-download p-1" style="font-size:20px;"></i></a>
+								<form method="post" action="{% url 'users:download_fileDOY' user.studentfiledoy.pk %}">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-download p-1" style="font-size:20px;"></i></button>
+								</form>
 							</div>
 						</td>
 						<td>
