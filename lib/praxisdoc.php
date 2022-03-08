@@ -448,6 +448,21 @@ class Praxis {
 		}
 	}
 
+	function getTitleByID($id) {
+		try {
+			$database = new DB();
+			$conn = $database->connect();
+			$sql = "SELECT title FROM praxis WHERE id=".$id;
+			$result = $conn->query($sql);
+			$row = mysqli_fetch_assoc($result);
+			$title = $row['title'];
+			$database->disconnect($conn);
+			return $title;
+		} catch (Exception $e) {
+			throw new Exception($e->getMessage());
+		}
+	}
+
 	function getOptions($id) {
 		try {
 			$database = new DB();

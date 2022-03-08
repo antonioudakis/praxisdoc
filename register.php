@@ -20,7 +20,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  <script src="js/praxisdoc.js"></script> 
+  <script src="js/praxisdoc.js"></script>
 
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <title>Εγγραφή</title>
@@ -47,7 +47,7 @@
                       </small>
                     </div>
                   </div>';
-          } else { 
+          } else {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               if (isset($_POST['email'])) {
                 $student->register($_POST['email'],$_POST['praxis']);
@@ -72,38 +72,38 @@
               }
             } else {
               $praxis = new Praxis();
-              //$content = mb_convert_encoding($content, 'UTF-8'); 
+              //$content = mb_convert_encoding($content, 'UTF-8');
               echo '<div class="shadow p-4 mb-4 bg-white">
                       <form method="post" enctype="multipart/form-data" action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
                         <div class="form-row mt-3">
                           <div class="col-md-6 form-group">
                             <label for="username">Όνομα Χρήστη:</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="'.$student->getUsername().'" readonly />
-                          </div>   
+                          </div>
                           <div class="col-md-6 form-group">
                             <label for="school">Σχολή:</label>
                             <input type="text" class="form-control" id="school" name="school" placeholder="Σχολή" value="'.$student->getSchool("title").'" readonly />
-                          </div> 
+                          </div>
                         </div>
                         <div class="form-row mt-3">
                           <div class="col-md-6 form-group">
                             <label for="lastname">Επώνυμο:</label>
                             <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Επώνυμο" value="'.$student->getLastname().'" readonly />
-                          </div>  
+                          </div>
                           <div class="col-md-6 form-group">
                             <label for="lastname">Όνομα:</label>
                             <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Όνομα" value="'.$student->getFirstname().'" readonly />
-                          </div>  
+                          </div>
                         </div>
                         <div class="form-row mt-6">
                           <div class="col-md-6 form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="'.$student->getEmail().'" readonly/>
-                          </div> 
+                          </div>
                           <div class="col-md-6 form-group">
                             <label for="praxis">Πρακτική Άσκηση:</label>
-                            <select class="form-control" id="praxis" name="praxis" readonly/>'.$praxis->getOptions($student->getPraxis()).'</select>
-                          </div>   
+                            <select class="form-control" id="praxis" name="praxis" readonly/><option value="'.$student->getPraxis().'" selected>'.$praxis->getTitleByID($student->getPraxis()).'</option></select>
+                          </div>
                         </div>
                         <div class="d-flex flex-row-reverse mt-3">
                           <div class="btn-group" role="group">
