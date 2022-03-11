@@ -606,14 +606,20 @@ class Upload {
 					<div class="tab-content">
   						<div class="tab-pane container active" id="home">';
 
-			$sql = "SELECT file.id as fileID,file.filename as filename,file.descr as fileDescr,filepath,uploadedTime,filetype,size,student.lastname as lastname,student.firstname as firstname, student.fathername as fathername, student.city as city, student.street as street, student.tk as tk, student.idnumber as idnumber, student.idissuedate as idissuedate, student.taxid as taxid, student.taxdivision as taxdivision, student.school as school, student.gender as gender, student.username as username FROM (upload INNER JOIN student ON upload.student = student.id) INNER JOIN file ON upload.file = file.id WHERE student.school =".$school." and student.praxis =".$praxis." ORDER BY student.lastname, student.firstname, fileID";
+			$sql = "	SELECT 	file.id as fileID,file.filename as filename,file.descr as fileDescr,filepath,uploadedTime,filetype,size,
+												student.lastname as lastname,student.firstname as firstname, student.fathername as fathername, student.city as city, student.street as street, student.tk as tk, student.idnumber as idnumber,
+												student.idissuedate as idissuedate, student.taxid as taxid, student.taxdivision as taxdivision, student.school as school, student.gender as gender,
+												student.username as username
+								FROM ((upload INNER JOIN student ON upload.student = student.id) INNER JOIN file ON upload.file = file.id)
+											INNER JOIN deliverable on deliverable.praxis = student.praxis and deliverable.school = student.school and deliverable.file = file.id
+								WHERE student.school =".$school." and student.praxis =".$praxis." and deliverable.period = 1 ORDER BY student.lastname, student.firstname, fileID";
 			$result = $conn->query($sql);
 			if ($result->num_rows == 0) {
 				$database->disconnect($conn);
 
 				echo "<p>Δεν υπάρχουν δεδομένα</p>";
 			} else {
-				$sql1 ="SELECT shortdescr from file where period = 1";
+				$sql1 = "select shortdescr from file inner join deliverable on file.id = deliverable.file where deliverable.praxis = ".$praxis." and deliverable.school = ".$school." and deliverable.period = 1";
 				$result1 = $conn->query($sql1);
 				echo '
                       	<div class="table-responsive">
@@ -631,27 +637,6 @@ class Upload {
                              <div class="d-flex justify-content-center">'.$row1['shortdescr'].'</div>
                           </th>';
                       }
-                            		/*<th>
-                              			<div class="d-flex justify-content-center">Ταυτότητα</div>
-                            		</th>
-                            		<th>
-                              			<div class="d-flex justify-content-center">ΕΦΚΑ</div>
-                            		</th>
-                            		<th>
-                              			<div class="d-flex justify-content-center">ΑΦΜ</div>
-                            		</th>
-                            		<th>
-                              			<div class="d-flex justify-content-center">ΙΒΑΝ</div>
-                            		</th>
-                            		<th>
-                              			<div class="d-flex justify-content-center">Βιβλιάριο</div>
-                            		</th>
-									<th>
-                              			<div class="d-flex justify-content-center">Ε3.5 Έναρξης</div>
-                            		</th>
-									<th>
-                              			<div class="d-flex justify-content-center">Ε3.5 Λήξης</div>
-                            		</th>*/
                 echo '          		</tr>
                         	</thead>
                         <tbody>';
@@ -774,12 +759,71 @@ class Upload {
 
 				}
 				echo "</tr></tbody></table></div>";
-				$database->disconnect($conn);
+				//$database->disconnect($conn);
 			}
 
 			echo '</div>
-  						<div class="tab-pane container fade" id="menu1">...</div>
-					</div>';
+  						<div class="tab-pane container fade" id="menu1">';
+
+										$sql = "	SELECT 	file.id as fileID,file.filename as filename,file.descr as fileDescr,filepath,uploadedTime,filetype,size,
+																			student.lastname as lastname,student.firstname as firstname, student.fathername as fathername, student.city as city, student.street as street, student.tk as tk, student.idnumber as idnumber,
+																			student.idissuedate as idissuedate, student.taxid as taxid, student.taxdivision as taxdivision, student.school as school, student.gender as gender,
+																			student.username as username
+															FROM ((upload INNER JOIN student ON upload.student = student.id) INNER JOIN file ON upload.file = file.id)
+																		INNER JOIN deliverable on deliverable.praxis = student.praxis and deliverable.school = student.school and deliverable.file = file.id
+															WHERE student.school =".$school." and student.praxis =".$praxis." and deliverable.period = 2 ORDER BY student.lastname, student.firstname, fileID";
+										$result = $conn->query($sql);
+										if ($result->num_rows == 0) {
+											$database->disconnect($conn);
+
+											echo "<p>Δεν υπάρχουν δεδομένα</p>";
+										} else {
+											$sql1 = "select shortdescr from file inner join deliverable on file.id = deliverable.file where deliverable.praxis = ".$praxis." and deliverable.school = ".$school." and deliverable.period = 2";
+											$result1 = $conn->query($sql1);
+											echo '
+							                      	<div class="table-responsive">
+							                      		<table class="table mb-0">
+							                        	<thead>
+							                          		<tr>
+							                            		<th>Α/Α</th>
+							                            		<th>Επώνυμο</th>
+							                            		<th>Όνομα</th>';
+							                while ($row1=$result1->fetch_assoc()) {
+							                	echo '<th>
+							                             <div class="d-flex justify-content-center">'.$row1['shortdescr'].'</div>
+							                          </th>';
+							                      }
+							                echo '          		</tr>
+							                        	</thead>
+							                        <tbody>';
+											$aa=0;
+											$prev="";
+											echo "<tr>";
+											while ($row=$result->fetch_assoc()) {
+												if ($prev!=$row['username']) {
+													$aa++;
+													echo "</tr><tr><td>".$aa."</td><td>".$row['lastname']."</td>"."<td>".$row['firstname']."</td>";
+													$prev=$row['username'];
+												}
+												if ($row['uploadedTime']==null) {
+													echo "<td><div class='d-flex justify-content-center'>---</div></td>";
+												} else {
+												echo "<td>
+																	<div class='d-flex justify-content-center'>
+																		<form action='download.php' method='post' enctype='multipart/form-data'>
+																			<input type='hidden' value='".$row['filepath']."' name='path' id='path'>
+																			<button type='submit' class='btn btn-success'><i class='fas fa-download'></i></button>
+																		</form>
+																	</div>
+																</td>";}
+
+											}
+											echo "</tr></tbody></table></div>";
+											$database->disconnect($conn);
+										}
+
+										echo '</div>';
+			echo '</div>';
 			echo '</div>';
 		} catch (Exception $e) {
 			throw new Exception($e->getMessage());
