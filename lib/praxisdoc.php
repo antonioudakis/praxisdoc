@@ -253,11 +253,11 @@ class Student extends User {
 		}
 	}
 
-	function update($email,$praxis) {
+	function update($email) {
 		try {
 			$database = new DB();
 			$conn = $database->connect();
-			$sql = "UPDATE student set email = '".$email."', praxis = ".$praxis." where username ='".$this->getUsername()."'";
+			$sql = "UPDATE student set email = '".$email."' where username ='".$this->getUsername()."'";
 			if ($conn->query($sql)) {
 				$database->disconnect($conn);
 			} else {
