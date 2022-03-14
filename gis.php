@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html> 
-<head> 
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
-  <title>Google Maps Marker as a Link</title> 
-  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Google Maps Marker as a Link</title>
+  <script src="http://maps.google.com/maps/api/js?sensor=false"
           type="text/javascript"></script>
-</head> 
+</head>
 <body>
   <div id="map" style="width: 500px; height: 400px;"></div>
-  <?php 
+  <?php
 	if (isset($_POST["submit_address"]))
 	{
 		$address = $_POST["address"];

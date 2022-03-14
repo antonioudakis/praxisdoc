@@ -21,7 +21,7 @@
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-  <script src="js/praxisdoc.js"></script> 
+  <script src="js/praxisdoc.js"></script>
 
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <title>Υποβολή Δικαιολογητικών</title>
@@ -48,17 +48,17 @@
                       </small>
                     </div>
                   </div>';
-          } else { 
+          } else {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
               if(isset($_POST['filename'])) {
                 $file_name=$_POST['filename'];
                 if (isset($_FILES[$file_name]) && $_FILES[$file_name]["error"] == 0) {
-                  //$file_name     = $_FILES["fileID"]["name"]; 
-                  $file_type     = $_FILES[$file_name]["type"]; 
-                  $file_size     = $_FILES[$file_name]["size"]; 
-                  $file_tmp_name = $_FILES[$file_name]["tmp_name"]; 
-                  try {      
+                  //$file_name     = $_FILES["fileID"]["name"];
+                  $file_type     = $_FILES[$file_name]["type"];
+                  $file_size     = $_FILES[$file_name]["size"];
+                  $file_tmp_name = $_FILES[$file_name]["tmp_name"];
+                  try {
                     $student->saveFile($file_name,$file_type,$file_size,$file_tmp_name);
                     $student->showMessage('success','Επιτυχία!','Το αρχείο αποθηκεύτηκε.');
                     // header('Location: upload.php');
@@ -87,7 +87,7 @@
                               </thead>
                               <tbody>';
                     $upload = new Upload();
-                    echo $upload->getStudentUploadedFiles($student->getID());
+                    echo $upload->getStudentUploadedFiles($student->getID(),$student->getPeriod());
                     echo ' </tbody>
                           </table>
                             <div class="border-top pt-3">
@@ -103,7 +103,7 @@
                             <div class="d-flex flex-row-reverse mt-3">
                               <a href="index.php" class="btn btn-info mx-2"><i class="fas fa-undo"></i> Επιστροφή</a>
                             </div>';
-                  }       
+                  }
                 } else {
                   $student->showMessage('danger','Σφάλμα!','Δεν επιλέξατε κάποιο αρχείο.');
                   echo '<div class="shadow p-4 mb-4 bg-white">
@@ -125,7 +125,7 @@
                             </thead>
                           <tbody>';
                   $upload = new Upload();
-                  echo $upload->getStudentUploadedFiles($student->getID());
+                  echo $upload->getStudentUploadedFiles($student->getID(),$student->getPeriod());
                   echo '  </tbody>
                         </table>
                           <div class="border-top pt-3">
@@ -168,7 +168,7 @@
                           </thead>
                           <tbody>';
                 $upload = new Upload();
-                echo $upload->getStudentUploadedFiles($student->getID());
+                echo $upload->getStudentUploadedFiles($student->getID(),$student->getPeriod());
                 echo '    </tbody>
                         </table>
                           <div class="border-top pt-3">

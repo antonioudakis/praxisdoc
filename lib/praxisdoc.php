@@ -6,6 +6,7 @@ class User {
 	private $firstname;
 	private $email;
 	private $praxis;
+	private $period;
 	private $remoteIP;
 
 	function __construct() {
@@ -15,6 +16,7 @@ class User {
 		$this->email = $_SERVER['mail'];
 		$this->remoteIP = $_SERVER['REMOTE_ADDR'];
 		$this->getCurrentPraxis();
+		$this->getCurrentPeriod();
 	}
 
 	function getUsername() {
@@ -37,6 +39,10 @@ class User {
 		return $this->praxis;
 	}
 
+	function getPeriod(){
+		return $this->period;
+	}
+
 	function getRemoteIP() {
 		return $this->remoteIP;
 	}
@@ -56,6 +62,15 @@ class User {
 		if ($file = file_get_contents('/usr/local/etc/config.json')) {
 			$obj = json_decode($file);
 			$this->praxis = $obj->current_praxis;
+		} else {
+			throw new Exception("Σφάλμα κατά την παραμετροποίηση.");
+		}
+	}
+
+	function getCurrentPeriod() {
+		if ($file = file_get_contents('/usr/local/etc/config.json')) {
+			$obj = json_decode($file);
+			$this->period = $obj->current_period;
 		} else {
 			throw new Exception("Σφάλμα κατά την παραμετροποίηση.");
 		}
@@ -187,25 +202,6 @@ class Student extends User {
 		}
 	}
 
-	/*function getPraxis() {
-		try {
-			if ($this->isRegistered()) {
-				$database = new DB();
-				$conn = $database->connect();
-  				$sql = "SELECT max(praxis) FROM student WHERE username='".$this->getUsername()."'";
-  				$result = $conn->query($sql);
-				$row = $result->fetch_assoc();
-				$praxis = $row['praxis'];
-				$database->disconnect($conn);
-				return  $praxis;
-			} else {
-				return parent::getPraxis();
-			}
-		} catch (Exception $e) {
-			$this->showMessage('danger','Σφάλμα!',$e->getMessage());
-		}
-	}*/
-
 	function isRegistered() {
 		try {
 			$database = new DB();
@@ -229,11 +225,11 @@ class Student extends User {
 		}
 	}
 
-	function register($email,$praxis) {
+	function register($email) {
 		try {
 			$database = new DB();
 			$conn = $database->connect();
-			$sql = "INSERT INTO student (username,lastname,firstname,email,praxis,school) VALUES ('".$this->getUsername()."','".$this->getLastname()."','".$this->getFirstname()."','".$email."',".$praxis.",".$this->getShibSchool().")";
+			$sql = "INSERT INTO student (username,lastname,firstname,email,praxis,school) VALUES ('".$this->getUsername()."','".$this->getLastname()."','".$this->getFirstname()."','".$email."',".$this->getPraxis().",".$this->getShibSchool().")";
 			if ($conn->query($sql)) {
 				$sql = "SELECT id from file";
 				$result = $conn->query($sql);
@@ -508,12 +504,15 @@ class Praxis {
 
 class Upload {
 
-	function getStudentUploadedFiles($student) {
+	function getStudentUploadedFiles($student,$period) {
 		try {
 			$database = new DB();
 			$conn = $database->connect();
 			$files;
-			$sql = "SELECT file.id as fileID,file.filename as filename,file.descr as fileDescr,filepath,uploadedTime,filetype,size FROM (upload INNER JOIN student ON upload.student = student.id) INNER JOIN file ON upload.file = file.id WHERE upload.student =".$student." ORDER BY file.id";
+			$sql = "SELECT file.id as fileID,file.filename as filename,file.descr as fileDescr,filepath,uploadedTime,filetype,size
+							FROM ((upload INNER JOIN student ON upload.student = student.id) INNER JOIN file ON upload.file = file.id)
+							INNER JOIN deliverable on deliverable.praxis = student.praxis and deliverable.school = student.school and deliverable.file = file.id
+							WHERE student.id =".$student." and deliverable.period =".$period." ORDER BY file.id";
 			$result = $conn->query($sql);
 			if ($result->num_rows == 0) {
 				$database->disconnect($conn);

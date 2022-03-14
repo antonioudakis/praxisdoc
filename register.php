@@ -50,7 +50,7 @@
           } else {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               if (isset($_POST['email'])) {
-                $student->register($_POST['email'],$_POST['praxis']);
+                $student->register($_POST['email']);
                 echo '<div class="content-section">
                         <h3>Επιτυχής Εγγραφή</h3>
                         <div class="border-top pt-3">
@@ -102,7 +102,7 @@
                           </div>
                           <div class="col-md-6 form-group">
                             <label for="praxis">Πρακτική Άσκηση:</label>
-                            <select class="form-control" id="praxis" name="praxis" readonly/><option value="'.$student->getPraxis().'" selected>'.$praxis->getTitleByID($student->getPraxis()).'</option></select>
+                            <input type="text" class="form-control" id="praxis" name="praxis" placeholder="Πρακτική Άσκηση" value="'.$praxis->getTitleByID($student->getPraxis()).'" readonly />
                           </div>
                         </div>
                         <div class="d-flex flex-row-reverse mt-3">
