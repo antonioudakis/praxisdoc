@@ -332,7 +332,11 @@ class Student extends User {
 		try {
 			$database = new DB();
 			$conn = $database->connect();
-			$sql="SELECT until FROM deadline where school=".$this->getSchool("code")." and praxis=".$this->getPraxis();
+			if ($this->getPeriod()==1) {
+				$sql="SELECT until as until FROM deadline where school=".$this->getSchool("code")." and praxis=".$this->getPraxis();
+			} else {
+				$sql="SELECT until2 as until FROM deadline where school=".$this->getSchool("code")." and praxis=".$this->getPraxis();
+			}
 			$result = $conn->query($sql);
 			if ($result->num_rows == 0) {
 				$database->disconnect($conn);
@@ -352,7 +356,11 @@ class Student extends User {
 		try {
 			$database = new DB();
 			$conn = $database->connect();
-			$sql="SELECT until,CURDATE() as current FROM deadline where school=".$this->getSchool("code")." and praxis=".$this->getPraxis();
+			if ($this->getPeriod()==1) {
+				$sql="SELECT until as until,CURDATE() as current FROM deadline where school=".$this->getSchool("code")." and praxis=".$this->getPraxis();
+			} else {
+				$sql="SELECT until2 as until,CURDATE() as current FROM deadline where school=".$this->getSchool("code")." and praxis=".$this->getPraxis();
+			}
 			$result = $conn->query($sql);
 			if ($result->num_rows == 0) {
 				$database->disconnect($conn);
