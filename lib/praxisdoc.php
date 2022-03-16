@@ -604,10 +604,10 @@ class Upload {
       	echo '<!-- Nav tabs -->
 							<ul class="nav nav-tabs">
   						<li class="nav-item">
-    						<a class="nav-link active" data-toggle="tab" href="#home">Έγγραφα Έναρξης ΠΑ</a>
+    						<a class="nav-link active" data-toggle="tab" href="#home">Δικαιολογητικά Έναρξης ΠΑ</a>
   						</li>
   						<li class="nav-item">
-    						<a class="nav-link" data-toggle="tab" href="#menu1">Έγγραφα Λήξης ΠΑ</a>
+    						<a class="nav-link" data-toggle="tab" href="#menu1">Παραδοτέα Έγγραφα Λήξης ΠΑ</a>
   						</li>
 						</ul>';
 			} else {
