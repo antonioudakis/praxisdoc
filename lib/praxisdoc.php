@@ -231,7 +231,7 @@ class Student extends User {
 			$conn = $database->connect();
 			$sql = "INSERT INTO student (username,lastname,firstname,email,praxis,school) VALUES ('".$this->getUsername()."','".$this->getLastname()."','".$this->getFirstname()."','".$email."',".$this->getPraxis().",".$this->getShibSchool().")";
 			if ($conn->query($sql)) {
-				$sql = "SELECT id from file";
+				$sql = "SELECT file.id as id FROM file INNER JOIN deliverable ON file.id = deliverable.file WHERE deliverable.period = 1 AND deliverable.school = ".$this->getSchool("code")." AND deliverable.praxis = ".$this->getPraxis()." ORDER BY file.id";
 				$result = $conn->query($sql);
 				while ($row = $result->fetch_assoc()) {
 					$sql1 = "INSERT INTO upload (student,file) values (".$this->getID().",".$row['id'].")";
