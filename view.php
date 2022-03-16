@@ -21,7 +21,7 @@
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-  <script src="js/praxisdoc.js"></script> 
+  <script src="js/praxisdoc.js"></script>
 
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <title>Προβολή Δικαιολογητικών</title>
@@ -40,14 +40,14 @@
         $employee = new Employee();
         if ($employee->isRegistered()) {
           if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-         
+
             $upload = new Upload();
             try {
-              $upload->getSchoolUploadedFiles($_POST['school'],$_POST['praxis']);
+              $upload->getSchoolUploadedFiles($_POST['school'],$_POST['praxis'],$employee->getPeriod());
             } catch(Exception $e) {
               echo $e->getMessage();
             }
-            echo '      
+            echo '
                         <div class="d-flex flex-row-reverse my-3">
                             <a href="index.php" class="btn btn-info mx-2"><i class="fas fa-undo"></i> Επιστροφή</a>
                         </div>';
@@ -58,7 +58,7 @@
                       <p><small class="text-muted">Πατήστε <a href="index.php">εδώ</a> για να επιστρέψετε στην αρχική σελίδα.</small></p>
                     </div>
                   </div>';
-        } 
+        }
       } else {
           echo '<div class="content-section">
                   <h3>Στα δικαιολογητικά έχουν πρόσβαση μόνο οι εξουσιοδοτημένοι χρήστες του Γραφείου Πρακτικής Άσκησης</h3>
