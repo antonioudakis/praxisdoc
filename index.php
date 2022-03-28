@@ -59,17 +59,23 @@
                     </div>';
             }
           } else {
-            if ($student->isTimeOut()) {
+            if ($student->getPeriod()==2) {
               echo '<div class="d-flex justify-content-center mb-4">
-                      <p>Έχει λήξει η προθεσμία υποβολής των δικαιολογητικών (<b>'.$student->getDeadline().'</b>)</p>
+                      <p>Έχει λήξει η περίοδος εγγραφής.</p>
                     </div>';
             } else {
-              echo '<div class="d-flex justify-content-center mb-4">
-                      <p>Καταληκτική Ημερομηνία Υποβολής των Δικαιολογητικών : <b>'.$student->getDeadline().'</b></p>
-                    </div>';
-              echo '<div class="d-flex justify-content-center">
-                    <a href="register.php" class="btn btn-success m-4 btn-lg">Εγγραφή</a>
-                  </div>';
+              if ($student->isTimeOut()) {
+                echo '<div class="d-flex justify-content-center mb-4">
+                        <p>Έχει λήξει η προθεσμία υποβολής των δικαιολογητικών (<b>'.$student->getDeadline().'</b>)</p>
+                      </div>';
+              } else {
+                echo '<div class="d-flex justify-content-center mb-4">
+                        <p>Καταληκτική Ημερομηνία Υποβολής των Δικαιολογητικών : <b>'.$student->getDeadline().'</b></p>
+                      </div>';
+                echo '<div class="d-flex justify-content-center">
+                        <a href="register.php" class="btn btn-success m-4 btn-lg">Εγγραφή</a>
+                      </div>';
+              }
             }
           }
         } catch(Exception $e) {
